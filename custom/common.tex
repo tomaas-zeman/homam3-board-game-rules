@@ -1,0 +1,273 @@
+% !TeX spellcheck = en_US
+\documentclass[12pt]{article}
+
+% Language setting
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+
+\def\sections{sections}
+\def\lang_header_adjustment{0px}
+
+\newcommand{\pageshorthand}{p.}
+
+\title{\includegraphics[width=6cm]{\images/title.png}\\The Rewrite}
+
+% Set page size and margins
+\usepackage[
+  a4paper,
+  top=2cm,
+  bottom=3cm,
+  left=2cm,
+  right=2cm,
+  marginparwidth=1.75cm,
+  footskip=2.05cm
+]{geometry}
+
+% Useful packages
+\usepackage[export]{adjustbox}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{caption}
+\usepackage[strict]{changepage}
+\usepackage{enumitem}
+\usepackage{etoolbox}
+\usepackage{float}
+\usepackage{fullwidth}
+\usepackage{graphicx, trimclip}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+\usepackage{hyperref}
+\usepackage[noautomatic, nonewpage]{imakeidx}
+\usepackage{multicol}
+\usepackage[super]{nth}
+\usepackage{outlines}
+\usepackage{paracol}
+\usepackage[section]{placeins}
+\usepackage{setspace}
+\usepackage{stfloats}
+\usepackage{subcaption}
+\usepackage[usetransparent=false]{svg}
+\usepackage{tabularx}
+\usepackage[subfigure]{tocloft}
+\usepackage{tikz}
+\usepackage{titlesec}
+\usepackage{verbatim}
+\usepackage{varwidth}
+\usepackage{wrapfig}
+\usepackage{soul}
+\usepackage[most]{tcolorbox}
+\newtcolorbox{scaledfigure}[1][]{height fill, space to=\myspace,#1}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=goldenbrown,
+  filecolor=magenta,
+  urlcolor=cyan,
+  pdftitle={Heroes of Might \& Magic III Rule Book},
+  pdfpagemode=UseNone,
+}
+% Set the default spacing between paragraphs. Remove indentation.
+\usepackage[skip=6pt, indent=0pt]{parskip}
+\setstretch{1}
+
+% Add dots to the table of contents
+\renewcommand{\cftsecleader}{\cftdotfill{\cftsecdotsep}}
+\renewcommand\cftsecdotsep{\cftdot}
+\renewcommand\cftsubsecdotsep{\cftdot}
+
+\captionsetup[figure]{labelformat=empty}
+\captionsetup[subfigure]{labelformat=empty, singlelinecheck=off, justification=centering}
+\usetikzlibrary{shadows, shadows.blur, calc, backgrounds}
+
+\setlength{\columnsep}{1cm}
+\newtoggle{printable}
+
+% Variables
+\def\_assets{assets}
+
+\def\art{\_assets/art}
+\def\cards{\_assets/cards}
+\def\examples{\_assets/examples}
+\def\images{\_assets/images}
+\def\layout{\_assets/layout}
+\def\map_locations{\_assets/map-locations}
+\def\skills{\_assets/skills}
+\def\spells{\_assets/spells}
+\def\svgs{\_assets/glyphs}
+\def\notes_svgs{\svgs/for-notes}
+\def\tables{\_assets/tables}
+\def\qr{\_assets/qr-codes}
+
+\def\custom{custom}
+\def\scenarios{\custom/scenarios}
+\def\rules{\custom/rules}
+
+\sodef\sotitle{}{0.2em}{0.6em}{1.2em}
+
+\def\gold{\includesvg[height=10px]{\svgs/gold.svg}}
+\def\valuables{\includesvg[height=10px]{\svgs/valuablegreater.svg}}
+\def\building_materials{\includesvg[height=10px]{\svgs/building_materials.svg}}
+\def\spellpower{\includesvg[height=10px]{\svgs/spellpower.svg}}
+\def\pay{\includesvg[height=10px]{\svgs/pay_v2.svg}}
+
+\renewcommand{\labelitemi}{\includegraphics[width=0.7em, valign=c]{\layout/listdot.png}}
+
+% Colors
+\definecolor{amber}{rgb}{1.0, 0.49, 0.0}
+\definecolor{antiquewhite}{rgb}{0.98, 0.92, 0.84}
+\definecolor{arylideyellow}{rgb}{0.96, 0.89, 0.58}
+\definecolor{cadmiumgreen}{rgb}{0.0, 0.42, 0.24}
+\definecolor{darkcandyapplered}{rgb}{0.64, 0.0, 0.0}
+\definecolor{goldenbrown}{rgb}{0.6, 0.4, 0.08}
+
+% Command to frame images
+\newcommand\framedimage[2][]{%
+  \begin{tikzpicture}
+    \draw (0, 0) node[inner sep=0] {\makebox[#1][c]{\includegraphics[width=#1]{#2}}};
+    \draw [bordermidyellow, thick] ([xshift=+1pt, yshift=-1pt] current bounding box.north west) rectangle ([xshift=-1pt, yshift=1pt] current bounding box.south east);
+    \draw [borderoutyellow, thick] (current bounding box.north west) rectangle (current bounding box.south east);
+    \draw [borderinyellow, thick] ([xshift=+3pt, yshift=-3pt] current bounding box.north west) rectangle ([xshift=-3pt, yshift=3pt] current bounding box.south east);
+  \end{tikzpicture}}
+% End of drop frame definition
+
+\titleformat{\section}
+{\huge}
+{\filright
+\footnotesize
+\enspace SECTION \thesection\enspace}
+{8pt}
+{\Huge\bfseries\filcenter\uppercase}
+%Create section heading with graphics. Argument one is heading name, argument two is picture to use on the left.
+\providecommand{\sectionheadertext}[1]{
+  \fontfamily{ptm}\selectfont{
+    \color{antiquewhite} \section*{\MakeUppercase{#1}}
+  }
+}
+\newcommand{\addsection}[2]{
+  \vspace*{-5em}
+  \hspace*{-1em}
+  \makebox[0pt][l]{
+  \raisebox{-\totalheight}[0pt][7pt]{
+    \begin{tikzpicture}
+      \draw (0, 0) node[inner sep=0] {\includegraphics[width=\linewidth, height=0.2\linewidth]{\layout/section_heading.jpg}};
+      \draw (-6.2, 0) node {\includegraphics[width=0.125\textwidth]{#2}};
+    \end{tikzpicture}
+    }
+  }
+  \begin{fullwidth}[leftmargin=0.16\textwidth]
+    \begin{center}
+      \vspace*{\lang_header_adjustment}
+      \sectionheadertext{#1}
+      \cleardoublepage\phantomsection\addcontentsline{toc}{section}{\protect\numberline{}#1}
+    \end{center}
+  \end{fullwidth}
+  \vspace{1.75em}
+}
+\newcommand{\addscenariosection}[3]{
+  \vspace*{-5em}
+  \hspace*{-1em}
+  \makebox[0pt][l]{
+  \raisebox{-\totalheight}[0pt][7pt]{
+    \begin{tikzpicture}
+      \draw (0, 0) node[inner sep=0, yscale=1.3] {\includegraphics[width=\linewidth, height=0.2\linewidth]{\layout/section_heading.jpg}};
+      \draw (-6.2, 0) node {\includegraphics[width=0.125\textwidth]{#3}};
+    \end{tikzpicture}
+    }
+  }
+  \begin{fullwidth}[leftmargin=0.16\textwidth]
+    \begin{center}
+      \vspace{-22pt}
+      \sectionheadertext{\small{\sotitle{#1}}}
+      \vspace{-12pt}
+      \sectionheadertext{#2}
+      \cleardoublepage\phantomsection\addcontentsline{toc}{section}{\protect\numberline{}#2}
+    \end{center}
+  \end{fullwidth}
+  \vspace{1.75em}
+}
+%End of create section heading.
+
+\newcommand\picdims[4][]{%
+  \setbox0=\hbox{\includegraphics[#1]{#4}}%
+  \clipbox{.5\dimexpr\wd0-#2\relax{} %
+    .5\dimexpr\ht0-#3\relax{} %
+    .5\dimexpr\wd0-#2\relax{} %
+    .5\dimexpr\ht0-#3\relax}{\includegraphics[#1]{#4}}}
+
+\tikzset{
+  thick/.style=      {line width=1.3pt},
+  very thick/.style= {line width=1.7pt},
+  ultra thick/.style={line width=2.2pt}
+}
+
+\definecolor{borderoutyellow}{HTML}{DBCA86}
+\definecolor{borderinyellow}{HTML}{B09E69}
+\definecolor{bordermidyellow}{HTML}{6f6749}
+% Create note box
+\providecommand{\notefont}[0]{\fontfamily{ptm}\selectfont}
+\newcommand{\note}[2]{
+  \begin{tikzpicture}
+    \draw (0, 0) node[inner sep=0] {\makebox[\linewidth][c]{\picdims[width=\linewidth]{\linewidth}{#1\baselineskip}{\layout/table-background.jpg}}};
+    \draw [borderoutyellow, very thick] (current bounding box.north west) rectangle (current bounding box.south east);
+    \draw [borderinyellow, thick] ([xshift=+2.8pt, yshift=-2.8pt] current bounding box.north west) rectangle ([xshift=-2.8pt, yshift=2.8pt] current bounding box.south east);
+    \node at (current bounding box.center) {
+      \begin{varwidth}{0.85\linewidth}
+      \notefont{
+        \color{arylideyellow}
+        \hypersetup{linkcolor=amber}
+        #2
+        \hypersetup{linkcolor=goldenbrown}
+      }
+      \end{varwidth}
+    };
+    \begin{pgfonlayer}{background}
+      \draw [shade, blur shadow={shadow opacity=15}] (current bounding box.north west) rectangle (current bounding box.south east);
+    \end{pgfonlayer}
+  \end{tikzpicture}
+}
+
+\newcommand{\hommtable}[2]{
+  \begin{tikzpicture}
+    \draw (0, 0) node[inner sep=0] {\makebox[\linewidth][c]{\picdims[width=\linewidth]{\linewidth}{#1\baselineskip}{\layout/table-background.jpg}}};
+    \draw [bordermidyellow, thick] ([xshift=+1pt, yshift=-1pt] current bounding box.north west) rectangle ([xshift=-1pt, yshift=1pt] current bounding box.south east);
+    \draw [borderoutyellow, thick] (current bounding box.north west) rectangle (current bounding box.south east);
+    \draw [borderinyellow, thick] ([xshift=+3pt, yshift=-3pt] current bounding box.north west) rectangle ([xshift=-3pt, yshift=3pt] current bounding box.south east);
+    \node at (current bounding box.center) {
+      \begin{varwidth}{0.95\linewidth}
+      \notefont{
+        \bgroup
+        \color{arylideyellow}
+        \hypersetup{linkcolor=amber}
+        \setlength{\tabcolsep}{0.3em}
+        #2
+        \egroup
+      }
+      \end{varwidth}
+    };
+    \begin{pgfonlayer}{background}
+      \draw [shade, blur shadow={shadow opacity=15}] (current bounding box.north west) rectangle (current bounding box.south east);
+    \end{pgfonlayer}
+  \end{tikzpicture}
+}
+
+\definecolor{darkcellborder}{HTML}{634831}
+\newcommand{\darkcell}[2][0.9]{
+  \begin{tikzpicture}
+    \filldraw[line width=1.0pt, fill=black, fill opacity=0.5, draw=darkcellborder] (0, 0) rectangle (\linewidth, #1);
+    \node[text width=\linewidth, align=center] at (current bounding box.center) {\textbf{#2}};
+  \end{tikzpicture}
+}
+
+\definecolor{lightcellborder}{HTML}{77543e}
+\newcommand{\lightcell}[2][0.9]{
+  \begin{tikzpicture}
+    \filldraw[line width=1.0pt, fill=black, fill opacity=0.2, draw=lightcellborder] (0, 0) rectangle (\linewidth, #1);
+    \node[text width=\linewidth, align=center] at (current bounding box.center) {\color{white}#2};
+  \end{tikzpicture}
+}
+
+% Command for overlay circled text
+\definecolor{goblin}{HTML}{3b7c33}
+\newcommand\encircle[1]{%
+  \tikz[baseline=(X.base)]
+  \node (X) [draw=white, shape=circle, inner sep=0, fill=goblin, text=white, blur shadow={shadow blur steps=5}] {\strut \textbf{#1}};%
+}
+

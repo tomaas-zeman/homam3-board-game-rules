@@ -17,3 +17,4 @@
 .vs
 sections/translated
 svg-inkscape/*
+.DS_Store
