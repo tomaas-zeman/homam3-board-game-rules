@@ -10,7 +10,7 @@ on:
 env:
   PO4A_VERSION: "0.71"
   PO4A_GH_URL: https://github.com/mquinson/po4a/releases/download
-  GHOSTSCRIPT_URL: https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10030/gs_10.03.0_amd64_snap.tgz
+  GHOSTSCRIPT_URL: https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs9560/gs_9.56.0_amd64_snap.tgz
   ARTIFACT_RETENTION_DAYS: 1
 
 jobs:
@@ -66,8 +66,8 @@ jobs:
       - name: Install ghostscript
         run: |
           wget --quiet ${{ env.GHOSTSCRIPT_URL }}
-          tar -xvf gs_10.03.0_amd64_snap.tgz
-          sudo snap install ./gs_10.03.0_amd64_snap/gs_10.03.0_amd64.snap --devmode
+          tar -xvf gs_9.56.0_amd64_snap.tgz
+          sudo snap install ./gs_9.56.0_amd64_snap/gs_9.56.0_amd64.snap --devmode
 
       - name: Optimize PDF
         run: |
@@ -115,7 +115,7 @@ jobs:
       - name: Optimize PDF
         run: |
           du -sh main_${{ matrix.language }}.pdf
-          tools/optimize.sh ${{ matrix.language }} cmyk
+          tools/optimize.sh ${{ matrix.language }}
           mv main_${{ matrix.language }}_optimized.pdf main_${{ matrix.language }}.pdf
           du -sh main_${{ matrix.language }}.pdf
 
