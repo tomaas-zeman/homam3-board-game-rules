@@ -6,7 +6,7 @@ case "$(uname -s)" in
 esac
 
 LANGUAGE=$1
-SECTION=$2  # supported: 'sections', 'rules'
+SECTION=$2  # supported: 'rules', 'scenarios'
 
 case "${LANGUAGE}" in
   ru|ua|cs)

@@ -1,5 +1,20 @@
-\input{custom/common.tex}
+% !TeX spellcheck = en_US
+\documentclass[12pt]{article}
+
+% Language setting
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+
+\def\lang_header_adjustment{0px}
+\newcommand{\pageshorthand}{p.}
+
+\input{metadata.tex}
+
+\newcommand{\svg}[1]{
+  \includesvg[height=10px]{\svgs/#1.svg}
+}
+
 \begin{document}
-\include{\rules/modifications.tex}
+\include{rules/modifications.tex}
 \end{document}
 
